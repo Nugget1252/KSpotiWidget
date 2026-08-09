@@ -1,0 +1,115 @@
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+      http://www.kde.org/standards/kcfg/1.0/kcfg.xsd">
+    <group name="General">
+        <entry name="transparentBackground" type="Bool">
+            <label>Transparent background</label>
+            <description>Use transparent background when plasmoid is on desktop (not in panel)</description>
+            <default>false</default>
+        </entry>
+        <entry name="showLyrics" type="Bool">
+            <label>Show lyrics</label>
+            <default>true</default>
+        </entry>
+        <entry name="highlightCurrentLine" type="Bool">
+            <label>Highlight current line</label>
+            <default>true</default>
+        </entry>
+        <entry name="alternativeLineHeightCalculation" type="Bool">
+            <label>Use alternative line height calculation</label>
+            <default>false</default>
+        </entry>
+        <entry name="lyricsFontSize" type="Int">
+            <label>Lyrics Font Size</label>
+            <default>12</default>
+            <min>8</min>
+            <max>72</max>
+        </entry>
+        <entry name="lyricsFontFamily" type="String">
+            <label>Lyrics Font Family</label>
+            <default>Noto Sans</default>
+        </entry>
+        <entry name="useCustomLyricsColor" type="Bool">
+            <label>Use custom lyrics text color</label>
+            <default>false</default>
+        </entry>
+        <entry name="lyricsTextColor" type="String">
+            <label>Lyrics Text Color</label>
+            <default>#ffffff</default>
+        </entry>
+
+        <!-- Translation Button Settings -->
+        <entry name="useCustomTransColor" type="Bool">
+            <label>Use custom translation button text color</label>
+            <default>false</default>
+        </entry>
+        <entry name="transTextColor" type="String">
+            <label>Translation Button Text Color</label>
+            <default>#1db954</default>
+        </entry>
+        <entry name="autoDetectLanguage" type="Bool">
+            <label>Auto-detect script (Japanese/Russian)</label>
+            <default>true</default>
+        </entry>
+
+        <entry name="showAlbumCover" type="Bool">
+            <label>Show album cover</label>
+            <default>true</default>
+        </entry>
+        <entry name="fetchAlbumCoverHttps" type="Bool">
+            <label>Fetch album cover from HTTPS sources</label>
+            <default>false</default>
+        </entry>
+        <entry name="maxTitleArtistLength" type="Int">
+            <label>Max Title/Artist Length</label>
+            <default>64</default>
+            <min>10</min>
+            <max>200</max>
+        </entry>
+        <entry name="showTitle" type="Bool">
+            <label>Show title</label>
+            <default>true</default>
+        </entry>
+        <entry name="titleFontSize" type="Int">
+            <label>Title Font Size</label>
+            <default>14</default>
+            <min>8</min>
+            <max>72</max>
+        </entry>
+        <entry name="titleFontFamily" type="String">
+            <label>Title Font Family</label>
+            <default>Noto Sans</default>
+        </entry>
+        <entry name="useCustomTitleColor" type="Bool">
+            <label>Use custom title text color</label>
+            <default>false</default>
+        </entry>
+        <entry name="titleTextColor" type="String">
+            <label>Title Text Color</label>
+            <default>#ffffff</default>
+        </entry>
+        <entry name="showArtist" type="Bool">
+            <label>Show artist</label>
+            <default>true</default>
+        </entry>
+        <entry name="artistFontSize" type="Int">
+            <label>Artist Font Size</label>
+            <default>12</default>
+            <min>8</min>
+            <max>72</max>
+        </entry>
+        <entry name="artistFontFamily" type="String">
+            <label>Artist Font Family</label>
+            <default>Noto Sans</default>
+        </entry>
+        <entry name="useCustomArtistColor" type="Bool">
+            <label>Use custom artist text color</label>
+            <default>false</default>
+        </entry>
+        <entry name="artistTextColor" type="String">
+            <label>Artist Text Color</label>
+            <default>#ffffff</default>
+        </entry>
+    </group>
+</kcfg>
