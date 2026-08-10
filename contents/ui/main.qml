@@ -54,7 +54,7 @@ PlasmoidItem {
 
     function checkAndStartServer() {
         var xhr = new XMLHttpRequest();
-        xhr.open("GET", "http://127.0.0.1:8080/position");
+        xhr.open("GET", "http://127.0.0.1:28481/position");
         xhr.onreadystatechange = function() {
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 if (xhr.status !== 200) {
@@ -623,7 +623,7 @@ PlasmoidItem {
 
     function translateViaPython(lyricsArray, trackName, artistName, callback) {
         var xhr = new XMLHttpRequest();
-        xhr.open("POST", "http://127.0.0.1:8080/convert");
+        xhr.open("POST", "http://127.0.0.1:28481/convert");
         xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         xhr.onreadystatechange = function() {
             if (xhr.readyState === XMLHttpRequest.DONE) {

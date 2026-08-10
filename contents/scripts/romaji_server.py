@@ -351,5 +351,5 @@ def convert():
 
 
 if __name__ == '__main__':
-    print("Starting storage-backed translation engine on http://127.0.0.1:8080")
-    app.run(host='127.0.0.1', port=8080, debug=False)
+    print("Starting storage-backed translation engine on http://127.0.0.1:28481")
+    app.run(host='127.0.0.1', port=28481, debug=False)
