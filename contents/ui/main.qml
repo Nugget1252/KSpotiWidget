@@ -6,6 +6,7 @@ import org.kde.kirigami as Kirigami
 import Qt5Compat.GraphicalEffects
 import org.kde.plasma.core as PlasmaCore
 import org.kde.plasma.components 3.0 as PlasmaComponents3
+import org.kde.plasma.plasma5support 2.0 as Plasma5Support
 
 PlasmoidItem {
     id: widget
@@ -27,6 +28,42 @@ PlasmoidItem {
     property string longestLyricLine: ""
 
     readonly property bool lyricsActive: plasmoid.configuration.showLyrics && spotify && spotify.ready && lyricsRenderer.lyrics && lyricsRenderer.lyrics.length > 0
+
+    // Background Process Auto-Launcher
+    Plasma5Support.DataSource {
+        id: serverLauncher
+        engine: "executable"
+        connectedSources: []
+    }
+
+    Component.onCompleted: {
+        checkAndStartServer();
+    }
+
+    function getScriptAbsolutePath() {
+        let mainUrl = Qt.resolvedUrl("main.qml").toString();
+        let absPath = mainUrl.replace("file://", "").replace("ui/main.qml", "scripts/romaji_server.py");
+        return absPath;
+    }
+
+    function launchServerProcess() {
+        let absPath = getScriptAbsolutePath();
+        let cmd = "sh -c 'nohup python3 \"" + absPath + "\" >/dev/null 2>&1 || nohup python \"" + absPath + "\" >/dev/null 2>&1 &'";
+        serverLauncher.connectSource(cmd);
+    }
+
+    function checkAndStartServer() {
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "http://127.0.0.1:8080/position");
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status !== 200) {
+                    launchServerProcess();
+                }
+            }
+        };
+        xhr.send();
+    }
 
     Text {
         id: textMeasurer
@@ -141,14 +178,13 @@ PlasmoidItem {
             fillMode: Image.PreserveAspectCrop
             asynchronous: true
 
-            property string fallbackSource: "../assets/icon.svg"
+            property string fallbackSource: Qt.resolvedUrl("../assets/icon.svg")
 
-            source: artwork.fallbackSource
+            source: fallbackSource
             visible: plasmoid.configuration.showAlbumCover
 
             onStatusChanged: {
                 if (status === Image.Error) {
-                    console.warn("Artwork load failed, using fallback asset.")
                     source = fallbackSource
                 }
             }
@@ -305,7 +341,7 @@ PlasmoidItem {
                 Layout.preferredHeight: 180
                 Layout.alignment: Qt.AlignHCenter
                 fillMode: Image.PreserveAspectCrop
-                source: artwork.source
+                source: (artwork.source && artwork.source.toString().length > 0) ? artwork.source : artwork.fallbackSource
                 asynchronous: true
 
                 layer.enabled: true
@@ -357,7 +393,6 @@ PlasmoidItem {
                     }
                 }
 
-                // Dynamic binding to keep slider synchronized
                 Binding {
                     target: seekSlider
                     property: "value"
@@ -365,7 +400,6 @@ PlasmoidItem {
                     when: spotify.ready && !seekSlider.pressed && dropdownPopup.visible
                 }
 
-                // Periodic popup timer to tick timeline
                 Timer {
                     interval: 250
                     running: dropdownPopup.visible && spotify.ready && spotify.playing
@@ -393,7 +427,6 @@ PlasmoidItem {
                 }
             }
 
-            // Media control buttons with Breeze system icons
             RowLayout {
                 Layout.alignment: Qt.AlignHCenter
                 spacing: 6
@@ -493,10 +526,16 @@ PlasmoidItem {
     function updateArtwork() {
         if (spotify.ready) {
             let url = spotify.artworkUrl;
-            if (url && url.startsWith("https://") && !plasmoid.configuration.fetchAlbumCoverHttps) {
-                url = url.replace("https://", "http://");
+            if (url && typeof url === "string" && url.length > 0) {
+                if (url.startsWith("https://") && !plasmoid.configuration.fetchAlbumCoverHttps) {
+                    url = url.replace("https://", "http://");
+                }
+                artwork.source = url;
+            } else {
+                artwork.source = artwork.fallbackSource;
             }
-            artwork.source = url || artwork.fallbackSource;
+        } else {
+            artwork.source = artwork.fallbackSource;
         }
     }
 
@@ -516,7 +555,7 @@ PlasmoidItem {
         updateLyrics();
     }
 
-    /* Smart Lyric Router with Automatic Fallback to Original */
+    /* Smart Lyric Router */
     function updateLyrics() {
         if (!spotify || !spotify.ready) return;
 
@@ -592,7 +631,8 @@ PlasmoidItem {
                     var response = JSON.parse(xhr.responseText);
                     callback(response.lyrics, response.script || widget.currentDetectedScript);
                 } else {
-                    console.warn("Python server offline, fallback to original.");
+                    console.warn("Python server offline, launching server process...");
+                    launchServerProcess();
                     callback(lyricsArray, widget.currentDetectedScript);
                 }
             }
