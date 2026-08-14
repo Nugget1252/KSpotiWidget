@@ -1,15 +1,6 @@
 # KSpotiWidget
 Live synced lyrics with Romanized lyrics for Japanese and Russian with media control.
 
-First-Time Setup (Required for Lyrics & Translation) After installing KSpotiWidget, open your terminal and paste this single command to enable the translation server and auto-start on boot:
-```bash
-cd ~/.local/share/plasma/plasmoids/KSpotiWidget/ 
-chmod +x install.sh 
-./install.sh
-```
-
-
-
 ## Credits & Acknowledgments
 
 This project is a fork of [plasmoid-spotify](https://github.com/LabyStudio/plasmoid-spotify) by **LabyStudio** (licensed under GPL-3.0) and includes third-party open-source components and Creative Commons assets.
