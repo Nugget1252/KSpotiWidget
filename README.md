@@ -18,8 +18,6 @@ This project is a fork of [plasmoid-spotify](https://github.com/LabyStudio/plasm
 
 * **Icons & Artwork**:
   * [Breeze Icon Theme](https://github.com/KDE/breeze-icons) © [KDE Visual Design Group](https://kde.org) — Licensed under [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/).
-  * *[Insert Asset Title if applicable]* © *[Author Name]* — Available at *[Source Link]* under [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/) *(Modified / Adapted for KSpotiWidget)*.
-
 ### Third-Party Libraries & APIs
 
 * **Original Plasmoid**: [plasmoid-spotify](https://github.com/LabyStudio/plasmoid-spotify) by LabyStudio — Licensed under [GPL-3.0](https://www.gnu.org/licenses/gpl-3.0.html).
